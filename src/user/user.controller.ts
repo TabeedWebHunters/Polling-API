@@ -1,7 +1,6 @@
 import { Controller, Get, Post, Put, Delete, Param, Body, UseGuards } from '@nestjs/common';
 import { UserService } from './user.service';
 import { User } from './entities/user.entity';
-import { AuthGuard } from '@nestjs/passport';
 
 @Controller('users')
 export class UserController {
@@ -18,7 +17,6 @@ export class UserController {
   }
 
   @Post()
-  @UseGuards(AuthGuard())
   async create(@Body() user: User): Promise<User> {
     return this.userService.create(user);
   }

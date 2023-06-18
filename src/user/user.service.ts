@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { SupabaseClient, createClient } from '@supabase/supabase-js';
 import { User } from './entities/user.entity';
-
+import * as bcrypt from 'bcrypt'
 @Injectable()
 export class UserService {
   private supabase: SupabaseClient;
@@ -52,10 +52,14 @@ export class UserService {
   }
 
   async create(user: User): Promise<User> {
+    const {name, email, password}  = user;
+
+    const hashPassword = await bcrypt.hash(password, 10)
+    const newUser = { ...user, password: hashPassword }; 
     
     const { data, error } = await this.supabase
       .from('users')
-      .insert([user]);
+      .insert([newUser]);
     if (error || !data || data.length === 0) {
       throw new Error(`Failed to create user: ${error?.message}`);
     }

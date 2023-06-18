@@ -1,13 +1,10 @@
 import { Module } from '@nestjs/common';
 import { PollService } from './poll.service';
 import { PollController } from './poll.controller';
-import { AuthModule } from 'src/auth/auth.module';
-import { JwtStrategy } from 'src/auth/jwt.strategy';
-import { UserService } from 'src/user/user.service';
 
 @Module({
-  imports: [AuthModule],
+  imports: [],
   controllers: [PollController],
-  providers: [PollService,JwtStrategy, UserService]
+  providers: [PollService]
 })
 export class PollModule {}
