@@ -38,17 +38,15 @@ export class UserService {
   async findOneByEmail(email: string): Promise<User> {
     console.log(email);
     const { data: user, error } = await this.supabase
-    .from('users')
-    .select('*')
-    .eq('email', email)
-    .single();
-  if (error || !user) {
-    throw new Error(`User not found: ${error?.message}`);
-  }
-  if (!user) {
-    return null; 
-  }
-  return user
+      .from('users')
+      .select('*')
+      .filter('email', 'eq', email)
+      .single();
+  
+    if (error || !user) {
+      throw new Error(`User not found: ${error?.message}`);
+    }
+    return user;
   }
 
   async create(user: User): Promise<User> {
