@@ -8,9 +8,9 @@ export class Poll {
   @Column()
   question: string;
 
-  @Column('jsonb')
+  @Column({ type: 'jsonb', default: [{ option: '', votes: 0 }] })
   options: { option: string; votes: number }[];
 
-  @Column({name: 'totalvotes', default: 0})
+  @Column({ name: 'totalvotes', default: 0 })
   totalVotes: number;
 }
